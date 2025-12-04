@@ -45,22 +45,6 @@ def _resolve_global(name: str) -> Optional[Any]:
     return getattr(module, attr, None)
 
 
-def _allowlist_globals(names: List[str]):
-    """
-    Convert dotted names to objects and add them to torch safe globals.
-    Ignores names that can't be resolved.
-    """
-    objs = []
-    for name in names:
-        obj = _resolve_global(name)
-        if obj is not None:
-            objs.append(obj)
-    if objs:
-        add_safe_globals(objs)
-        return True
-    return False
-
-
 def _attempt_load_pipeline(max_retries: int = 8):
     """
     Try to load the pyannote pipeline. On UnpicklingError, parse the missing
@@ -99,7 +83,7 @@ def _attempt_load_pipeline(max_retries: int = 8):
                 # we couldn't resolve any of the parsed names -> break
                 break
 
-            # add to safe globals and retry
+            print(resolved)
             add_safe_globals(resolved)
             continue
 
