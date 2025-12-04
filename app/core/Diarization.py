@@ -1,7 +1,7 @@
 import os
 from pydub import AudioSegment
 from app.core.Transcription import transcribe
-from app.core.Models import model_store
+from app.core.Models import model_store, load_models
 
 def stream_diarization(audio_path: str):
     diarization = model_store.diarization_pipeline
@@ -49,5 +49,6 @@ def stream_diarization(audio_path: str):
         }
 
 if __name__ == "__main__":
+    load_models()
     for item in stream_diarization(audio_path="audio.wav"):
         print(item)
