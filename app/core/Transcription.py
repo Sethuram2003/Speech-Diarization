@@ -1,12 +1,9 @@
-from transformers import AudioFlamingo3ForConditionalGeneration, AutoProcessor
-
-model_id = "nvidia/audio-flamingo-3-hf"
-processor = AutoProcessor.from_pretrained(model_id)
-model = AudioFlamingo3ForConditionalGeneration.from_pretrained(
-    model_id, device_map="cpu"
-)
+from app.core.Models import model_store
 
 def transcribe(audio_file):
+    processor = model_store.flamingo_processor
+    model = model_store.flamingo_model
+    
     conversation = [
         {
             "role": "user",

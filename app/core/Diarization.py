@@ -1,18 +1,10 @@
 import os
 from pydub import AudioSegment
-from dotenv import load_dotenv
-from pyannote.audio import Pipeline
 from app.core.Transcription import transcribe
-
-load_dotenv()
-
-pipeline = Pipeline.from_pretrained(
-    "pyannote/speaker-diarization-3.1",
-    token=os.getenv("hf_token"),
-)
+from app.core.Models import model_store
 
 def stream_diarization(audio_path: str):
-    diarization = pipeline(audio_path)
+    diarization = model_store.diarization_pipeline
     annotation = diarization.speaker_diarization
 
     merged_segments = []
