@@ -1,18 +1,30 @@
-# app/core/Diarization.py
 import os
-
 from pydub import AudioSegment
+from dotenv import load_dotenv
 
-from app.core.Transcription import transcribe  
-from app.core.utils import get_pipeline
+# import torch
+# from torch.serialization import add_safe_globals
 
+# import torch.torch_version
+# from pyannote.audio.core.task import Specifications
+
+# add_safe_globals([
+#     torch.torch_version.TorchVersion,
+#     Specifications,
+# ])
+
+
+from pyannote.audio import Pipeline
+from app.core.Transcription import transcribe
+
+load_dotenv()
+
+pipeline = Pipeline.from_pretrained(
+    "pyannote/speaker-diarization-3.1",
+    token=os.getenv("hf_token"),
+)
 
 def stream_diarization(audio_path: str):
-    """
-    Generator that yields diarization + transcript items one by one.
-    Uses lazy-loaded pipeline so importing this module does NOT load heavy models.
-    """
-    pipeline = get_pipeline()
     diarization = pipeline(audio_path)
     annotation = diarization.speaker_diarization
 
@@ -23,6 +35,7 @@ def stream_diarization(audio_path: str):
 
     for segment, _, speaker in annotation.itertracks(yield_label=True):
         start, end = segment.start, segment.end
+
         if speaker != current_speaker:
             if current_speaker is not None:
                 merged_segments.append((current_start, current_end, current_speaker))
@@ -56,7 +69,6 @@ def stream_diarization(audio_path: str):
             "file_path": split_path,
         }
 
-
 if __name__ == "__main__":
-    for item in stream_diarization("audio.wav"):
+    for item in stream_diarization(audio_path="audio.wav"):
         print(item)
