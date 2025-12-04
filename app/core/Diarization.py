@@ -55,3 +55,6 @@ def stream_diarization(audio_path: str):
             "transcript": transcript,
             "file_path": split_path,
         }
+
+if __name__ == "__main__":
+    print(stream_diarization(audio_path="audio.wav"))
