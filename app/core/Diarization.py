@@ -1,6 +1,13 @@
 import os
 from pydub import AudioSegment
 from dotenv import load_dotenv
+
+import torch
+from torch.serialization import add_safe_globals
+import torch.torch_version
+
+add_safe_globals([torch.torch_version.TorchVersion])
+
 from pyannote.audio import Pipeline
 from app.core.Transcription import transcribe
 
