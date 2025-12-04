@@ -11,7 +11,7 @@ def transcribe(audio_file):
         {
             "role": "user",
             "content": [
-                {"type": "text", "text": "Transcribe the input speech."},
+                {"type": "text", "text": "Transcribe the input speech audio just output transcribe text from the output"},
                 {"type": "audio", "path": audio_file},
             ],
         }
