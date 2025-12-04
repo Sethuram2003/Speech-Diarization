@@ -3,6 +3,8 @@ aiohappyeyeballs==2.6.1
 aiohttp==3.13.2
 aiosignal==1.4.0
 alembic==1.17.1
+annotated-doc==0.0.4
+annotated-types==0.7.0
 anyio==4.11.0
 asteroid-filterbanks==0.4.0
 attrs==25.4.0
@@ -18,6 +20,7 @@ cycler==0.12.1
 decorator==5.2.1
 dotenv==0.9.9
 einops==0.8.1
+fastapi==0.123.9
 filelock==3.20.0
 flatbuffers==25.9.23
 fonttools==4.60.1
@@ -97,11 +100,14 @@ pyannote-metrics==4.0.0
 pyannote-pipeline==4.0.0
 pyannoteai-sdk==0.3.0
 pycparser==2.23
+pydantic==2.12.5
+pydantic_core==2.41.5
 pydub==0.25.1
 Pygments==2.19.2
 pyparsing==3.2.5
 python-dateutil==2.9.0.post0
 python-dotenv==1.2.1
+python-multipart==0.0.20
 pytorch-lightning==2.5.6
 pytorch-metric-learning==2.9.0
 pytz==2025.2
@@ -120,6 +126,7 @@ sortedcontainers==2.4.0
 soundfile==0.13.1
 soxr==1.0.0
 SQLAlchemy==2.0.44
+starlette==0.50.0
 sympy==1.14.0
 threadpoolctl==3.6.0
 tokenizers==0.22.1
@@ -133,6 +140,7 @@ tqdm==4.67.1
 transformers @ git+https://github.com/huggingface/transformers@6f6095e0cf509f7384d3ce0c1804013ef6cafd5f
 triton==3.4.0
 typer-slim==0.20.0
+typing-inspection==0.4.2
 typing_extensions==4.15.0
 tzdata==2025.2
 urllib3==2.5.0
