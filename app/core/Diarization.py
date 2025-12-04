@@ -57,4 +57,6 @@ def stream_diarization(audio_path: str):
         }
 
 if __name__ == "__main__":
-    print(stream_diarization(audio_path="audio.wav"))
+    for item in stream_diarization(audio_path="audio.wav"):
+        print(item)
+
