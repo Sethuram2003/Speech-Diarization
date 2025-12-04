@@ -4,7 +4,7 @@ from app.core.Transcription import transcribe
 from app.core.Models import model_store, load_models
 
 def stream_diarization(audio_path: str):
-    diarization = model_store.diarization_pipeline
+    diarization = model_store.diarization_pipeline(audio_path)
     annotation = diarization.speaker_diarization
 
     merged_segments = []
@@ -49,6 +49,5 @@ def stream_diarization(audio_path: str):
         }
 
 if __name__ == "__main__":
-    load_models()
     for item in stream_diarization(audio_path="audio.wav"):
         print(item)

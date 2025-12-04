@@ -12,7 +12,7 @@ from fastapi import FastAPI
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     print("Loading models ....")
-    load_models()
+    await load_models()
 
     yield
 

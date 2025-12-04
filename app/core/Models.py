@@ -12,7 +12,7 @@ class ModelStore:
 
 model_store = ModelStore()
 
-def load_models():
+async def load_models():
     """Load all heavy ML models once at FastAPI startup."""
     print("🔄 Loading diarization & transcription models...")
 
