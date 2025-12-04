@@ -1,19 +1,10 @@
-# app/core/Diarization.py
 import os
-
 from pydub import AudioSegment
-
-from app.core.Transcription import transcribe  
-from app.core.utils import get_pipeline
-
+from app.core.Transcription import transcribe
+from app.core.Models import model_store, load_models
 
 def stream_diarization(audio_path: str):
-    """
-    Generator that yields diarization + transcript items one by one.
-    Uses lazy-loaded pipeline so importing this module does NOT load heavy models.
-    """
-    pipeline = get_pipeline()
-    diarization = pipeline(audio_path)
+    diarization = model_store.diarization_pipeline(audio_path)
     annotation = diarization.speaker_diarization
 
     merged_segments = []
@@ -23,6 +14,7 @@ def stream_diarization(audio_path: str):
 
     for segment, _, speaker in annotation.itertracks(yield_label=True):
         start, end = segment.start, segment.end
+
         if speaker != current_speaker:
             if current_speaker is not None:
                 merged_segments.append((current_start, current_end, current_speaker))
@@ -56,7 +48,6 @@ def stream_diarization(audio_path: str):
             "file_path": split_path,
         }
 
-
 if __name__ == "__main__":
-    for item in stream_diarization("audio.wav"):
+    for item in stream_diarization(audio_path="audio.wav"):
         print(item)

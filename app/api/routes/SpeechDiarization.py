@@ -29,8 +29,9 @@ async def diarize_audio(file: UploadFile = File(...)):
     
     # Create a unique filename to avoid conflicts
     temp_filename = f"temp_{uuid.uuid4()}.wav"
-    temp_path = os.path.join("/app", temp_filename)
-    
+    os.makedirs("temp", exist_ok=True)
+    temp_path = os.path.join("temp", temp_filename)
+
     # Save uploaded file temporarily
     try:
         with open(temp_path, "wb") as buffer:
