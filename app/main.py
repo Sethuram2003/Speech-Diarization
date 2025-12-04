@@ -3,6 +3,7 @@ load_dotenv()
 
 from fastapi.middleware.cors import CORSMiddleware
 from app.api.routes.HealthCheck import health_check_router
+from app.api.routes.SpeechDiarization import diarization_router
 
 from fastapi import FastAPI
 
@@ -17,3 +18,4 @@ app.add_middleware(
 )
 
 app.include_router(health_check_router)
+app.include_router(diarization_router)
