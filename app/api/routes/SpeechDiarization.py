@@ -5,8 +5,6 @@ from app.core.Diarization import stream_diarization
 
 diarization_router = APIRouter(tags=["Speech"])
 
-app = FastAPI()
-
 @diarization_router.post("/diarization")
 def diarize_audio(path:str):
     def event_stream():
