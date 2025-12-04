@@ -1,0 +1,32 @@
+services:
+  server:
+    container_name: speech-diarization-api
+    env_file:
+      - .env
+    build:
+      context: .
+      dockerfile: Dockerfile
+      platforms:
+        - linux/arm64
+    ports:
+      - "8000:8000"
+    volumes:
+      # Persist audio splits and temporary files
+      - ./splits:/app/splits
+      # Mount a directory for input audio files (optional - for path-based access)
+      - ./audio_input:/app/audio_input
+      # Cache HuggingFace models to avoid re-downloading
+      - huggingface-cache:/home/appuser/.cache/huggingface
+    environment:
+      - PYTHONUNBUFFERED=1
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+volumes:
+  huggingface-cache:
+
