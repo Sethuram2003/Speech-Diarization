@@ -1,6 +1,5 @@
-# syntax=docker/dockerfile:1
 
-FROM python:3.12-slim
+FROM --platform=linux/amd64 python:3.12-slim
 
 ENV PYTHONDONTWRITEBYTECODE=1
 
@@ -15,14 +14,15 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 ARG UID=10001
-RUN adduser \
-    --disabled-password \
-    --gecos "" \
-    --home "/nonexistent" \
-    --shell "/sbin/nologin" \
-    --no-create-home \
-    --uid "${UID}" \
-    appuser
+RUN useradd -m -u ${UID} -s /bin/bash appuser
+
+RUN mkdir -p /home/appuser/.cache/huggingface 
+RUN mkdir -p /home/appuser/.cache/matplotlib 
+RUN mkdir -p /home/appuser/.config/matplotlib 
+RUN chown -R appuser /home/appuser
+
+ENV MPLCONFIGDIR=/home/appuser/.config/matplotlib
+ENV HF_HOME=/home/appuser/.cache/huggingface
 
 COPY requirements.txt ./
 
