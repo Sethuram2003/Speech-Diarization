@@ -21,6 +21,8 @@ RUN mkdir -p /home/appuser/.cache/matplotlib
 RUN mkdir -p /home/appuser/.config/matplotlib 
 RUN chown -R appuser /home/appuser
 
+RUN mkdir -p /app/temp /app/splits && chown -R appuser:appuser /app/temp /app/splits
+
 ENV MPLCONFIGDIR=/home/appuser/.config/matplotlib
 ENV HF_HOME=/home/appuser/.cache/huggingface
 
